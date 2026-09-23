@@ -204,8 +204,8 @@
     audioInit();
     var year = pickYear();
     video.muted = false; video.src = db[year]; video.load();
-    var warm = video.play();
-    if (warm && warm.then) warm.then(function () { video.pause(); video.currentTime = 0; }).catch(function () {});
+    var warm = video.play(); video.pause(); video.currentTime = 0;
+    if (warm && warm.catch) warm.catch(function () {});
     spinTo(year, function () {
       setTimeout(function () {
         flash.classList.add('on');
