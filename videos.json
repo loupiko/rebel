@@ -5,17 +5,38 @@
  "1991": "videos/1991.mp4",
  "1993": "videos/1993.mp4",
  "1995": "videos/1995.mp4",
+ "1996": "videos/1996.mp4",
  "1997": "videos/1997.MP4",
  "1998": "videos/1998.mp4",
  "2000": "videos/2000.mp4",
+ "2001": "videos/2001.mp4",
+ "2002": [
+  "videos/2002-a.mp4",
+  "videos/2002-b.mp4"
+ ],
  "2003": "videos/2003.mp4",
  "2005": [
   "videos/2005-a.mp4",
   "videos/2005-b.mp4"
  ],
- "2007": "videos/2007.mp4",
- "2008": "videos/2008.mp4",
+ "2006": "videos/2006.mp4",
+ "2007": [
+  "videos/2007.mp4",
+  "videos/2007-b.mp4",
+  "videos/2007-c.mp4",
+  "videos/2007-d.mp4"
+ ],
+ "2008": [
+  "videos/2008.mp4",
+  "videos/2008-b.mp4",
+  "videos/2008-c.mp4"
+ ],
  "2012": "videos/2012.mp4",
+ "2013": "videos/2013.mp4",
+ "2014": [
+  "videos/2014-a.mp4",
+  "videos/2014-b.mp4"
+ ],
  "2015": [
   "videos/2015-a.mp4",
   "videos/2015-b.mp4"
@@ -25,5 +46,9 @@
  "2020": "videos/2020.mp4",
  "2022": "videos/2022.mp4",
  "2023": "videos/2023.mp4",
+ "2024": [
+  "videos/2024-a.mp4",
+  "videos/2024-b.mp4"
+ ],
  "2026": "videos/2026.mp4"
 }
