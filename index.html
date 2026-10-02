@@ -239,9 +239,9 @@
   var picks = [0,1,2,3].map(function (i) { return $('p' + i); });
 
   /* ---------- état persistant ---------- */
-  var state = { streak: 0, done: [], unlocked: [], lastGuess: 2006, plays: 0 };
+  var state = { streak: 0, done: [], unlocked: [], lastGuess: 2006, plays: 0, seen: [] };
   function load() {
-    try { var s = JSON.parse(localStorage.getItem('rebel.v2') || 'null'); if (s && typeof s === 'object') { state.streak = +s.streak || 0; state.done = s.done || []; state.unlocked = s.unlocked || []; state.lastGuess = +s.lastGuess || 2006; state.plays = +s.plays || 0; } } catch (e) {}
+    try { var s = JSON.parse(localStorage.getItem('rebel.v2') || 'null'); if (s && typeof s === 'object') { state.streak = +s.streak || 0; state.done = s.done || []; state.unlocked = s.unlocked || []; state.lastGuess = +s.lastGuess || 2006; state.plays = +s.plays || 0; state.seen = Array.isArray(s.seen) ? s.seen : []; } } catch (e) {}
   }
   function save() { try { localStorage.setItem('rebel.v2', JSON.stringify(state)); } catch (e) {} }
   function nextTier() { for (var i = 0; i < TIERS.length; i++) if (state.streak < TIERS[i]) return TIERS[i]; return null; }
@@ -355,7 +355,15 @@
     if (!pool.length) { state.done = []; pool = years.slice(); }
     return pool[Math.floor(Math.random() * pool.length)];
   }
-  function fileOf(y) { var v = db[y]; return typeof v === 'string' ? v : v.file; }
+  function fileOf(y) {
+    var list = db[y] || [];
+    if (!Array.isArray(state.seen)) state.seen = [];
+    var fresh = list.filter(function (f) { return state.seen.indexOf(f) < 0; });
+    if (!fresh.length) { state.seen = state.seen.filter(function (f) { return list.indexOf(f) < 0; }); fresh = list.slice(); }
+    var f = fresh[Math.floor(Math.random() * fresh.length)];
+    state.seen.push(f);
+    return f;
+  }
 
   function playVideo() {
     screen.classList.add('on');
@@ -480,7 +488,8 @@
       Object.keys(data || {}).forEach(function (k) {
         var y = String(k).trim(), f = data[k];
         if (!/^\d{4}$/.test(y) || +y < MINY || +y > MAXY) return;
-        if (typeof f === 'string' && f) db[y] = f; else if (f && typeof f.file === 'string' && f.file) db[y] = f;
+        var list = (Array.isArray(f) ? f : [f]).map(function (x) { return typeof x === 'string' ? x : (x && x.file); }).filter(function (x) { return typeof x === 'string' && x; });
+        if (list.length) db[y] = list;
       });
       years = Object.keys(db).sort();
       if (!years.length) go.disabled = true;
