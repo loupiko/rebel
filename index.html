@@ -76,7 +76,7 @@
   #screen { background: #000; z-index: 12; }
   #video { width: 100%; height: 100%; object-fit: contain; background: #000; }
   #sound { position: absolute; bottom: max(18px, env(safe-area-inset-bottom)); left: 16px; border: 0; border-radius: 999px; padding: 12px 18px; font: inherit; font-size: 16px; background: rgba(255,255,255,.92); color: #000; display: none; }
-  #flash { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 20; transition: opacity .25s; }
+  #flash { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 20; transition: opacity .13s; }
   #flash.on { opacity: 1; }
 
   #guess { background: #e9ede8; background-image: linear-gradient(180deg, #f7f8f5 0%, #e6ebe6 50%, #d3ddd5 100%); padding: 20px 16px max(22px, env(safe-area-inset-bottom)); gap: clamp(10px, 2.5dvh, 22px); }
@@ -313,8 +313,8 @@
     if (!spinning) return;
     var dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
     var el = now - spinStart, rem = spinEnd - now, f = 1;
-    if (el < 500) f = ease(el / 500);
-    if (rem < 1200) f = Math.min(f, ease(Math.max(0, rem) / 1200));
+    if (el < 250) f = ease(el / 250);
+    if (rem < 600) f = Math.min(f, ease(Math.max(0, rem) / 600));
     minDeg += MIN_SPEED * f * dt; hourDeg += (MIN_SPEED / 12) * f * dt;
     setHands();
     if (now >= spinEnd) { spinning = false; return; }
@@ -341,9 +341,9 @@
   function spinReels(done) {
     var h = digitH();
     var steps = reels.map(function (s, i) { return buildReel(s, 3 + i); });
-    var durs = [2600, 3100, 3600, 4100];
+    var durs = [1300, 1550, 1800, 2050];
     var t0 = performance.now(), lastStep = [0, 0, 0, 0], finished = 0;
-    spinHands(4300);
+    spinHands(2150);
     function frame(now) {
       var el = now - t0;
       for (var i = 0; i < 4; i++) {
@@ -354,7 +354,7 @@
         if (st !== lastStep[i]) { lastStep[i] = st; tick(0.6 + 0.4 * (1 - p)); }
         if (p >= 1 && !reels[i].done) { reels[i].done = true; finished++; tick(1); }
       }
-      if (finished < 4) requestAnimationFrame(frame); else setTimeout(done, 250);
+      if (finished < 4) requestAnimationFrame(frame); else setTimeout(done, 125);
     }
     reels.forEach(function (r) { r.done = false; });
     requestAnimationFrame(frame);
@@ -393,8 +393,8 @@
     spinReels(function () {
       setTimeout(function () {
         flash.classList.add('on');
-        setTimeout(function () { flash.classList.remove('on'); playVideo(); }, 260);
-      }, 500);
+        setTimeout(function () { flash.classList.remove('on'); playVideo(); }, 130);
+      }, 250);
     });
   }
 
