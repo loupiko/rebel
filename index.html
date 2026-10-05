@@ -124,10 +124,10 @@
   #rewardMsg h2 { margin: 0 0 8px; font-size: clamp(32px, 9vw, 48px); color: #ffcf3f; text-shadow: 0 3px 0 #7a4a00; }
   #rewardMsg p { margin: 0 0 18px; font-size: 18px; color: #ddd; }
   #rewardBtn { position: relative; z-index: 2; }
-  #rback { display: none; position: absolute; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 3;
-    padding: 9px 24px; border-radius: 999px; border: 2px solid rgba(255,255,255,.7); background: rgba(0,0,0,.45); color: #fff;
-    font-family: "Permanent Marker", "Marker Felt", "Comic Sans MS", cursive; font-size: 18px; letter-spacing: .04em; cursor: pointer; }
-  #reward.long #rewardMsg, #reward.long #rewardBtn { display: none; }
+  #rback { display: none; position: absolute; left: max(12px, env(safe-area-inset-left)); bottom: max(14px, env(safe-area-inset-bottom)); z-index: 3;
+    padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.45); background: rgba(0,0,0,.35); color: rgba(255,255,255,.85);
+    font: 600 14px -apple-system, "Segoe UI", system-ui, sans-serif; letter-spacing: .02em; cursor: pointer; }
+  #reward.long #rewardMsg, #reward.long #rewardBtn { display: none !important; }
   #reward.long #rback { display: block; }
 
   #gallery { background: #e9ede8; padding: 24px 16px; gap: 10px; justify-content: flex-start; overflow: auto; }
@@ -234,7 +234,7 @@
     <video id="rvideo" playsinline preload="auto"></video>
     <div id="rewardMsg"><h2 class="marker" id="rewardTitle">NIVEAU 2 !</h2><p id="rewardText">Le Rebelle évolue…</p></div>
     <button id="rewardBtn" class="btn small" type="button">CONTINUER</button>
-    <button id="rback" type="button">‹ RETOUR</button>
+    <button id="rback" type="button">‹ Retour</button>
   </div>
 
   <div id="gallery" class="layer">
@@ -509,7 +509,8 @@
     musicOn();
   }
   function showReward(tier, fromGallery) {
-    reward.classList.remove('long');
+    /* dernier palier (générique) : pas de titre ni de bouton par-dessus, seulement « Retour » en bas à gauche */
+    reward.classList.toggle('long', +tier === TIERS[TIERS.length - 1] && !!rewards[String(tier)]);
     $('rewardTitle').textContent = 'NIVEAU ' + tier + ' !';
     var f = rewards[String(tier)];
     if (f) {
@@ -525,7 +526,7 @@
     $('rewardBtn').onclick = leave; $('rback').onclick = leave;
   }
   /* vidéo longue (générique du palier 20) : pas de texte par-dessus, bouton Retour toujours en bas */
-  rvideo.addEventListener('loadedmetadata', function () { reward.classList.toggle('long', rvideo.duration > 15); });
+  rvideo.addEventListener('loadedmetadata', function () { if (rvideo.duration > 15) reward.classList.add('long'); });
   $('resBtn').addEventListener('click', function () {
     if (pendingTier) { result.classList.remove('on'); showReward(pendingTier, false); pendingTier = null; }
     else home();
