@@ -489,7 +489,8 @@
     if (ok) {
       state.streak++; if (state.done.indexOf(current) < 0) state.done.push(current);
       pendingTier = null;
-      for (var i = 0; i < TIERS.length; i++) if (state.streak === TIERS[i] && state.unlocked.indexOf(TIERS[i]) < 0) { state.unlocked.push(TIERS[i]); pendingTier = TIERS[i]; }
+      /* la vidéo d'évolution se joue à chaque fois qu'un palier est atteint, même déjà débloqué */
+      for (var i = 0; i < TIERS.length; i++) if (state.streak === TIERS[i]) { if (state.unlocked.indexOf(TIERS[i]) < 0) state.unlocked.push(TIERS[i]); pendingTier = TIERS[i]; }
       $('resTitle').className = 'marker ok'; $('resTitle').textContent = current + ', EXACT !';
       $('resText').innerHTML = 'Série : <b>' + state.streak + '</b>' + (pendingTier ? ' — palier ' + pendingTier + ' atteint !' : (nextTier() ? ' · encore ' + (nextTier() - state.streak) + ' pour le palier ' + nextTier() : ' · légende !'));
       result.classList.add('ok'); $('win').style.display = 'block'; $('ko').style.display = 'none';
