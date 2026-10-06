@@ -279,14 +279,14 @@
   var actx = null, noiseBuf = null;
   function audioInit() {
     try {
-      if (!actx) {
-        actx = new (window.AudioContext || window.webkitAudioContext)();
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      if (!noiseBuf) {
         var len = Math.floor(actx.sampleRate * 0.05);
         noiseBuf = actx.createBuffer(1, len, actx.sampleRate);
         var d = noiseBuf.getChannelData(0);
         for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
       }
-      if (actx.state === 'suspended') actx.resume();
+      if (actx.state === 'suspended') { var pr = actx.resume(); if (pr && pr.then) pr.then(function () { if (!busy && musicWanted) musicOn(); }); }
     } catch (e) { actx = null; }
     musicLoad();
   }
@@ -298,11 +298,11 @@
     musicLoading = true;
     fetch('music.mp3').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
       return new Promise(function (res, rej) { actx.decodeAudioData(ab, res, rej); });
-    }).then(function (buf) { musicBuf = buf; if (musicWanted) musicOn(); }).catch(function () { musicLoading = false; });
+    }).then(function (buf) { musicBuf = buf; if (musicWanted && !busy) musicOn(); }).catch(function () { musicLoading = false; });
   }
   function musicOn() {
     musicWanted = true;
-    if (state.muted || !actx || !musicBuf || document.hidden) return;
+    if (state.muted || !actx || !musicBuf || document.hidden || actx.state !== 'running') return;
     if (!musicGain) { musicGain = actx.createGain(); musicGain.gain.value = 0; musicGain.connect(actx.destination); }
     if (!musicSrc) {
       var d = musicBuf.getChannelData(0), s = 0;
@@ -330,12 +330,17 @@
     state.muted = !state.muted; save(); renderMute();
     if (state.muted) musicOff(true); else if (musicWanted) musicOn();
   });
+  /* La musique est chargée et décodée dès l'ouverture ; iOS n'autorise le son qu'après un vrai geste
+     (touchend / click), donc elle démarre au premier toucher, où qu'il soit sur l'écran. */
   function firstTouch() {
-    document.removeEventListener('pointerdown', firstTouch, true); document.removeEventListener('touchend', firstTouch, true);
-    audioInit(); if (!busy) musicOn();
+    audioInit();
+    if (actx && actx.state === 'running') {
+      ['touchend', 'click', 'keydown'].forEach(function (ev) { document.removeEventListener(ev, firstTouch, true); });
+      if (!busy) musicOn();
+    }
   }
-  document.addEventListener('pointerdown', firstTouch, true);
-  document.addEventListener('touchend', firstTouch, true);
+  ['touchend', 'click', 'keydown'].forEach(function (ev) { document.addEventListener(ev, firstTouch, true); });
+  try { actx = new (window.AudioContext || window.webkitAudioContext)(); musicLoad(); } catch (e) { actx = null; }
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) { var w = musicWanted; musicOff(); musicWanted = w; }
     else if (musicWanted) musicOn();
