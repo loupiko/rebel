@@ -85,9 +85,6 @@
   #lfill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(180deg, #5aa9ff, #1f5fb0); transition: width .7s cubic-bezier(.2,.9,.3,1.2); }
   /* résultat : nouvelle vidéo */
   #resLib { margin: 0; font-size: clamp(15px, 4.2vw, 18px); color: #1f3a5f; } #resLib b { color: #1f5fb0; }
-  #newBadge { display: none; margin: 0; padding: 6px 16px; border-radius: 999px; background: #1f5fb0; color: #fff; font-family: "Permanent Marker", "Marker Felt", cursive; font-size: 18px; letter-spacing: .05em; box-shadow: 0 4px 0 #113a6e; }
-  #result.on #newBadge.show { display: inline-block; animation: badge .7s cubic-bezier(.2,1.4,.4,1) .4s both; }
-  @keyframes badge { 0% { transform: scale(.2) rotate(-8deg); opacity: 0; } 70% { transform: scale(1.15) rotate(2deg); opacity: 1; } 100% { transform: scale(1) rotate(0); } }
 
   #clockWrap { position: relative; flex: 0 1 auto; width: min(92vw, 46dvh, 480px); aspect-ratio: 1; margin: auto 0 0; }
   #clockImg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -287,7 +284,6 @@
     <div id="ko" aria-hidden="true">✖</div>
     <h2 id="resTitle" class="marker"></h2>
     <p id="resText"></p>
-    <span id="newBadge">NOUVELLE VIDÉO !</span>
     <p id="resLib"></p>
     <button id="resBtn" class="btn small" type="button">CONTINUER</button>
   </div>
@@ -352,7 +348,7 @@
     return '<b>' + TIERS[i] + ' dates d\'affilée</b> ou <b class="blue">' + (COUNT[i] === Infinity ? '100 % des vidéos débloquées (' + n + '/' + n + ')' : n + ' vidéos débloquées') + '</b>';
   }
   function save() { try { localStorage.setItem('rebel.v2', JSON.stringify(state)); } catch (e) {} }
-  function nextTier() { for (var i = 0; i < TIERS.length; i++) if (state.streak < TIERS[i]) return TIERS[i]; return null; }
+  function nextTier() { for (var i = 0; i < TIERS.length; i++) if (state.streak < TIERS[i] && state.unlocked.indexOf(TIERS[i]) < 0) return TIERS[i]; return null; }
   function prevTier() { var p = 0; for (var i = 0; i < TIERS.length; i++) if (state.streak >= TIERS[i]) p = TIERS[i]; return p; }
   function renderGauge() {
     var n = nextTier();
@@ -570,22 +566,20 @@
     var y = +slider.value; state.lastGuess = y; state.plays++;
     var ok = String(y) === String(current.year);
     guess.classList.remove('on');
-    result.classList.remove('ok', 'ko'); $('newBadge').classList.remove('show');
+    result.classList.remove('ok', 'ko');
     if (ok) {
       state.streak++;
       var isNew = state.found.indexOf(current.file) < 0; if (isNew) state.found.push(current.file);
       queue = [];
-      /* 1) paliers de série : la vidéo se joue à chaque fois, même déjà débloquée */
-      for (var i = 0; i < TIERS.length; i++) if (state.streak === TIERS[i]) queue.push(TIERS[i]);
-      /* 2) paliers de vidéos débloquées : une fois, au moment où le seuil est franchi */
-      for (var j = 0; j < TIERS.length; j++) if (state.found.length >= countNeeded(j) && state.countDone.indexOf(TIERS[j]) < 0) { state.countDone.push(TIERS[j]); if (queue.indexOf(TIERS[j]) < 0) queue.push(TIERS[j]); }
-      queue.sort(function (a, b) { return a - b; });
-      queue.forEach(function (tr) { if (state.unlocked.indexOf(tr) < 0) state.unlocked.push(tr); });
+      /* une évolution ne se joue qu'une seule fois : la première fois qu'elle est atteinte, par série OU par nombre de vidéos ; ensuite on la revoit depuis le menu Rebelle */
+      for (var i = 0; i < TIERS.length; i++) {
+        if (state.unlocked.indexOf(TIERS[i]) >= 0) continue;
+        if (state.streak >= TIERS[i] || state.found.length >= countNeeded(i)) { state.unlocked.push(TIERS[i]); queue.push(TIERS[i]); }
+      }
       $('resTitle').className = 'marker ok'; $('resTitle').textContent = current.year + ', EXACT !';
       $('resText').innerHTML = '🔥 Série : <b>' + state.streak + '</b>' + (queue.length ? ' — ' + EVO_NAMES[TIERS.indexOf(queue[queue.length - 1])] + ' !' : (nextTier() ? ' · encore ' + (nextTier() - state.streak) + ' pour le palier ' + nextTier() : ' · légende !'));
       var T = total();
       $('resLib').innerHTML = (isNew ? '' : 'Déjà dans ta bibliothèque · ') + '📼 <b>' + state.found.length + '</b> / ' + T + ' vidéos (' + Math.round(100 * state.found.length / T) + ' %)';
-      if (isNew) $('newBadge').classList.add('show');
       result.classList.add('ok'); $('win').style.display = 'block'; $('ko').style.display = 'none';
     } else {
       var diff = Math.abs(y - current.year);
