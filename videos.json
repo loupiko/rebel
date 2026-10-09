@@ -1,70 +1,236 @@
 {
- "1987": "videos/1987.mp4",
- "1989": "videos/1989.mp4",
- "1990": "videos/1990.mp4",
- "1991": "videos/1991.mp4",
- "1993": "videos/1993.mp4",
- "1995": "videos/1995.mp4",
- "1996": "videos/1996.mp4",
- "1997": "videos/1997.MP4",
- "1998": "videos/1998.mp4",
- "1999": "videos/1999.mp4",
- "2000": "videos/2000.mp4",
- "2001": "videos/2001.mp4",
+ "1987": [
+  {
+   "file": "videos/1987.mp4",
+   "title": "Marc déchire ton premier cadeau"
+  }
+ ],
+ "1989": [
+  {
+   "file": "videos/1989.mp4",
+   "title": "Ton petit frère débarque"
+  }
+ ],
+ "1990": [
+  {
+   "file": "videos/1990.mp4",
+   "title": "Tu t'ouvres l'arcade à Colmar"
+  }
+ ],
+ "1991": [
+  {
+   "file": "videos/1991.mp4",
+   "title": "Ton pote Yūsuke"
+  }
+ ],
+ "1993": [
+  {
+   "file": "videos/1993.mp4",
+   "title": "Eliott te sert de la pizza au petit-déj"
+  }
+ ],
+ "1995": [
+  {
+   "file": "videos/1995.mp4",
+   "title": "Les sauts de la mort de Marc"
+  }
+ ],
+ "1996": [
+  {
+   "file": "videos/1996.mp4",
+   "title": "Sylvain Franchet aux scouts"
+  }
+ ],
+ "1997": [
+  {
+   "file": "videos/1997.MP4",
+   "title": "Marc baisse le maillot de bain"
+  }
+ ],
+ "1998": [
+  {
+   "file": "videos/1998.mp4",
+   "title": "Cochon sonné à la Charité"
+  }
+ ],
+ "1999": [
+  {
+   "file": "videos/1999.mp4",
+   "title": "Vomi de Paul au Sénégal"
+  }
+ ],
+ "2000": [
+  {
+   "file": "videos/2000.mp4",
+   "title": "Bataille de marrons à la Marche"
+  }
+ ],
+ "2001": [
+  {
+   "file": "videos/2001.mp4",
+   "title": "Ton trophée des Youngblood"
+  }
+ ],
  "2002": [
-  "videos/2002-a.mp4",
-  "videos/2002-b.mp4"
+  {
+   "file": "videos/2002-a.mp4",
+   "title": "L'insolation de Marc"
+  },
+  {
+   "file": "videos/2002-b.mp4",
+   "title": "Le singe sur ton épaule"
+  }
  ],
- "2003": "videos/2003.mp4",
+ "2003": [
+  {
+   "file": "videos/2003.mp4",
+   "title": "Le ping-pong avec Christian"
+  }
+ ],
  "2005": [
-  "videos/2005-a.mp4",
-  "videos/2005-b.mp4"
+  {
+   "file": "videos/2005-a.mp4",
+   "title": "Rencontre avec Thomas"
+  },
+  {
+   "file": "videos/2005-b.mp4",
+   "title": "Saut à l'élastique"
+  }
  ],
- "2006": "videos/2006.mp4",
+ "2006": [
+  {
+   "file": "videos/2006.mp4",
+   "title": "Rencontre avec Alice"
+  }
+ ],
  "2007": [
-  "videos/2007.mp4",
-  "videos/2007-b.mp4",
-  "videos/2007-c.mp4",
-  "videos/2007-d.mp4"
+  {
+   "file": "videos/2007-b.mp4",
+   "title": "Alice cuisine pour toi"
+  },
+  {
+   "file": "videos/2007-c.mp4",
+   "title": "Ton marcel du Soft"
+  },
+  {
+   "file": "videos/2007-d.mp4",
+   "title": "Ton maxi coup de soleil d'Ardèche"
+  },
+  {
+   "file": "videos/2007.mp4",
+   "title": "Un crapaud presque dans ta face"
+  }
  ],
  "2008": [
-  "videos/2008.mp4",
-  "videos/2008-b.mp4",
-  "videos/2008-c.mp4"
+  {
+   "file": "videos/2008-b.mp4",
+   "title": "Le 1er 15 août"
+  },
+  {
+   "file": "videos/2008-c.mp4",
+   "title": "Ton premier jour de stage"
+  },
+  {
+   "file": "videos/2008.mp4",
+   "title": "Pêche à la mouche en Slovénie"
+  }
  ],
  "2012": [
-  "videos/2012.mp4",
-  "videos/2012-b.mp4"
+  {
+   "file": "videos/2012-b.mp4",
+   "title": "Noooo Noooo !"
+  },
+  {
+   "file": "videos/2012.mp4",
+   "title": "Ton 1er Vegas"
+  }
  ],
  "2013": [
-  "videos/2013.mp4",
-  "videos/2013-b.mp4"
+  {
+   "file": "videos/2013-b.mp4",
+   "title": "Contrôle de airsoft"
+  },
+  {
+   "file": "videos/2013.mp4",
+   "title": "Concert de Skrillex"
+  }
  ],
  "2014": [
-  "videos/2014-a.mp4",
-  "videos/2014-b.mp4"
+  {
+   "file": "videos/2014-a.mp4",
+   "title": "Universal à LA avec Thomas"
+  },
+  {
+   "file": "videos/2014-b.mp4",
+   "title": "Braqué chez toi par un flic"
+  }
  ],
  "2015": [
-  "videos/2015-a.mp4",
-  "videos/2015-b.mp4"
+  {
+   "file": "videos/2015-a.mp4",
+   "title": "Naissance de Max"
+  },
+  {
+   "file": "videos/2015-b.mp4",
+   "title": "Pool party à Vegas"
+  }
  ],
- "2017": "videos/2017.mp4",
+ "2017": [
+  {
+   "file": "videos/2017.mp4",
+   "title": "Tu vides un bar à Lille"
+  }
+ ],
  "2018": [
-  "videos/2018.mp4",
-  "videos/2018-b.mp4"
+  {
+   "file": "videos/2018-b.mp4",
+   "title": "Bienvenue au chalet"
+  },
+  {
+   "file": "videos/2018.mp4",
+   "title": "Naissance de Juliette"
+  }
  ],
- "2020": "videos/2020.mp4",
+ "2020": [
+  {
+   "file": "videos/2020.mp4",
+   "title": "Le tournoi du cowork en mini raquette"
+  }
+ ],
  "2022": [
-  "videos/2022.mp4",
-  "videos/2022-b.mp4"
+  {
+   "file": "videos/2022-b.mp4",
+   "title": "Santorin avec Alice"
+  },
+  {
+   "file": "videos/2022.mp4",
+   "title": "Aya chez Warner"
+  }
  ],
- "2023": "videos/2023.mp4",
+ "2023": [
+  {
+   "file": "videos/2023.mp4",
+   "title": "Ping-pong avec Alka"
+  }
+ ],
  "2024": [
-  "videos/2024-a.mp4",
-  "videos/2024-b.mp4"
+  {
+   "file": "videos/2024-a.mp4",
+   "title": "Coincé dans un HP"
+  },
+  {
+   "file": "videos/2024-b.mp4",
+   "title": "Tu gagnes les Pingouins"
+  }
  ],
  "2026": [
-  "videos/2026.mp4",
-  "videos/2026-b.mp4"
+  {
+   "file": "videos/2026-b.mp4",
+   "title": "Tournoi de cornhole en croisière"
+  },
+  {
+   "file": "videos/2026.mp4",
+   "title": "Rencontre avec Henry Michel"
+  }
  ]
 }
